@@ -1,17 +1,40 @@
-import requests, api_key, json
+import requests, json
+import os
+from dotenv import load_dotenv
 
+load_dotenv(dotenv_path="./.env")
+
+API_KEY = os.getenv("API_KEY")
 CHANNEL_HANDLE = "MrBeast"
-
-# url = f"https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&forHandle={CHANNEL_HANDLE}&key={api_key.api_key}"
 
 content_id = "VLPLoSWVnSA9vG_s-XT40oPKF0iWFGw8pOp2%3Fsbp%3DKgtIUEpLeEFoTHc1SUAB"
 
-url=f'https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id={content_id}&key={api_key.api_key}'
+def get_playlist_id():
 
-response = requests.get(url)
+    try:
 
-print(response)
+        url=f'https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=@{CHANNEL_HANDLE}&key={API_KEY}'
 
-data = response.json()
+        response = requests.get(url)
 
-print(json.dumps(data, indent=4))
+        response.raise_for_status()
+
+        data = response.json()
+
+        # print(json.dumps(data, indent=4))
+
+        data["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+
+        channel_items= data["items"][0]
+
+        channel_playlistId = channel_items["contentDetails"]["relatedPlaylists"]["uploads"]
+
+        print(channel_playlistId)
+
+        return channel_playlistId
+    
+    except requests.exceptions.RequestException as e:
+        raise e
+
+if __name__ == "__main__":
+    get_playlist_id()
