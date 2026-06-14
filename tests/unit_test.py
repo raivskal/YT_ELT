@@ -2,7 +2,7 @@ def test_api_key(api_key):
     assert api_key == "MOCK_KEY1234"
 
 def test_channel_handle(channel_handle):
-    assert channel_handle == "MRCHEESE"
+    assert channel_handle == "MRMRYT"
 
 def test_postgres_conn(mock_postgres_conn_vars):
     conn = mock_postgres_conn_vars
@@ -34,8 +34,8 @@ def test_dags_integrity(dagbag):
     print(f"Total DAGs loaded: {dagbag.size()}")
 
     expected_task_counts = {
-        "produce_json": 4,
-        "update_db": 2,
+        "produce_json": 5,
+        "update_db": 3,
         "data_quality": 2
     }
     print("===========")
