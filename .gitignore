@@ -3,5 +3,3 @@ __pycache__/
 logs/
 venv/
 .vscode/
-data/*.json
-data/
